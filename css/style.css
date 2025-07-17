@@ -178,7 +178,7 @@
      font-weight: 400;
      line-height: 18px;
      transition: color 0.3s ease;
-       font-family: 'Georgia', sans-serif;
+     font-family: 'Georgia', sans-serif;
      background-color: var(--background-color);
  }
 
@@ -249,18 +249,22 @@
 
  .dark-mode .news-headlines-section .accordion-body p.text-muted {
      color: #a0a0a0;
-      font-family: 'Georgia', sans-serif;
+     font-family: 'Georgia', sans-serif;
  }
 
  .dark-mode .news-headlines-section .accordion-body p {
      color: #e0e0e0 !important;
-      font-family: 'Georgia', sans-serif;
+     font-family: 'Georgia', sans-serif;
  }
 
  .dark-mode .mobile-frame {
      background-image: url(../img/light-mobile.png);
  }
 
+
+ .dark-mode  .footer span {
+ color: #00ff00;
+ }
 
  /* css mouseAnimationCanvas */
  #mouseAnimationCanvas {
