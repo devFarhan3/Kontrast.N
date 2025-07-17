@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontrast.N°2025</title>
+    <!-- <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"> -->
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+   
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="mobile-frame">
+        <div class="notch"></div>
+        <div class="header">
+            <span id="dateDisplay" class="date-section d-flex justify-content-start align-items-start">©
+                Kontrast.N°2025</span>
+            <div class="d-flex justify-content-between align-items-center mb-3 w-100">
+                <div class="d-flex align-items-center gap-2">
+                    <div id="timeTabs" class="time-tabs d-none">
+                        <span class="time-tab-btn" data-time="Systems">Systems</span>
+                        <span class="time-tab-btn" data-time="Matter">Matter</span>
+                        <span class="time-tab-btn" data-time="Organics">Organics</span>
+                        <span class="time-tab-btn" data-time="Dissonace">Dissonace</span>
+                    </div>
+                    <span id="activeTimeDisplay" class="active-time-display d-none"></span>
+                </div>
+                <span id="expandSimplify" class="expand-simplify-option d-none">Expand all</span>
+            </div>
+            <button id="darkModeToggle" aria-label="Toggle Dark Mode">
+                &#9789;
+            </button>
+        </div>
+
+        <div id="newsHeadlinesSection" class="news-headlines-section accordion">
+        </div>
+
+        <div class="footer">
+            <!-- <a href="#">Sign up</a>
+            <a href="#">Log in</a> -->
+            <span>© Kontrast.N°2025</span>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dateDisplay = document.getElementById('dateDisplay');
+            const timeTabs = document.getElementById('timeTabs');
+            const timeTabButtons = document.querySelectorAll('.time-tab-btn');
+            const activeTimeDisplay = document.getElementById('activeTimeDisplay');
+            const expandSimplifyBtn = document.getElementById('expandSimplify');
+            const newsHeadlinesSection = document.getElementById('newsHeadlinesSection');
+            const darkModeToggle = document.getElementById('darkModeToggle');
+
+            let isExpanded = false;
+            let currentActiveTime = '';
+            let currentNewsData = [];
+
+            const allNewsData = {
+                "Systems": [{
+                    id: "Systems-1",
+                    headline: "Volunteers Save Afghan Care For Millions",
+                    image: "https://placehold.co/300x200/cccccc/333333?text=News+Image+10AM-1",
+                    caption: "Blake, Wm. Christ Raising Jairus’s Daughter. 1799.",
+                    text: `UNICEF has prevented the collapse of two-thirds of Afghanistan’s healthcare system by running 96 hospitals and 2,400 clinics with 28,000 staff and 32,000 volunteers. The effort has supported over 2.2 million births since 2021.
+                                Working mostly in remote valleys, volunteers provide critical care, vaccinations, and health education to communities once isolated from modern infrastructure.`
+                }, {
+                    id: "Systems-2",
+                    headline: "Garden Found Beneath Jesus' Burial Site",
+                    image: "https://placehold.co/300x200/cccccc/333333?text=News+Image+10AM-2",
+                    caption: "Archaeological discovery in Jerusalem.",
+                    text: `A significant archaeological discovery has been made beneath the traditional burial site of Jesus, revealing what experts believe to be an ancient garden. This finding provides new insights into the historical context of the area.`
+                }, {
+                    id: "Systems-3",
+                    headline: "Hands-Free 'Flying Car' Test Succeeds",
+                    image: "https://placehold.co/300x200/cccccc/333333?text=News+Image+10AM-3",
+                    caption: "Future of personal transport takes flight.",
+                    text: `In a groundbreaking demonstration, a prototype 'flying car' successfully completed its first hands-free test flight. This marks a major step forward in the development of autonomous aerial vehicles for personal transportation.`
+                }, {
+                    id: "Systems-4",
+                    headline: "Israel Kills New Hamas Prime Minister",
+                    image: "https://placehold.co/300x200/cccccc/333333?text=News+Image+10AM-4",
+                    caption: "Tensions escalate in the region.",
+                    text: `Reports indicate that Israeli forces have carried out an operation resulting in the death of the newly appointed Hamas Prime Minister. This event is expected to significantly impact the geopolitical landscape and ongoing conflicts.`
+                }, {
+                    id: "Systems-5",
+                    headline: "RFK Jr. Cuts 10,000 Health Jobs",
+                    image: "https://placehold.co/300x200/cccccc/333333?text=News+Image+10AM-5",
+                    caption: "Controversial move impacts healthcare sector.",
+                    text: `In a controversial decision, RFK Jr.'s administration has announced significant cuts to health sector jobs, affecting over 10,000 positions. The move has drawn criticism from public health organizations and labor unions.`
+                }],
+                "Matter": [{
+                    id: "Matter-1",
+                    headline: "EU Aims To Stop Iran From Getting Nukes",
+                    image: "https://placehold.co/300x200/cccccc/333333?text=News+Image+3PM-1",
+                    caption: "Diplomatic efforts intensify.",
+                    text: `The European Union is intensifying diplomatic efforts to prevent Iran from developing nuclear weapons. Discussions are ongoing to find a peaceful resolution and ensure regional stability.`
+                }, {
+                    id: "Matter-2",
+                    headline: "Viral Anime Image Trend Overloads AI",
+                    image: "https://placehold.co/300x200/cccccc/333333?text=News+Image+3PM-2",
+                    caption: "Popular trend strains artificial intelligence systems.",
+                    text: `A new viral trend involving anime-style image generation has reportedly overloaded several AI systems, leading to slowdowns and service interruptions. Experts are advising caution with resource-intensive online activities.`
+                }, {
+                    id: "Matter-3",
+                    headline: "Americans Increasingly Tap 401(k)s Early",
+                    image: "https://placehold.co/300x200/cccccc/333333?text=News+Image+3PM-3",
+                    caption: "Economic pressures lead to early withdrawals.",
+                    text: `A growing number of Americans are reportedly tapping into their 401(k) retirement savings earlier than planned, a trend attributed to increasing economic pressures and rising cost of living.`
+                }, {
+                    id: "Matter-4",
+                    headline: "Europe Issues U.S. Travel Warning",
+                    image: "https://placehold.co/300x200/cccccc/333333?text=News+Image+3PM-4",
+                    caption: "Advisory due to health and safety concerns.",
+                    text: `Several European nations have issued travel warnings for the United States, citing various health and safety concerns. Travelers are advised to check official government advisories before planning trips.`
+                }, {
+                    id: "Matter-5",
+                    headline: "Nigerian Farmers Turn To Solar Pumps",
+                    image: "https://placehold.co/300x200/cccccc/333333?text=News+Image+3PM-5",
+                    caption: "Sustainable solutions for agriculture.",
+                    text: `In a move towards sustainable agriculture, Nigerian farmers are increasingly adopting solar-powered irrigation pumps. This initiative aims to improve crop yields and reduce reliance on traditional, less efficient methods.`
+                }],
+                "Organics": [{
+                    id: "Organics-1",
+                    headline: "New Space Telescope Discovers Exoplanet",
+                    image: "https://placehold.co/300x200/cccccc/333333?text=News+Image+8PM-1",
+                    caption: "Astronomers excited by new findings.",
+                    text: `A newly launched space telescope has made its first significant discovery: a potentially habitable exoplanet orbiting a distant star. This breakthrough opens new avenues for the search for extraterrestrial life.`
+                }, {
+                    id: "Organics-2",
+                    headline: "Global Food Prices Expected to Rise",
+                    image: "https://placehold.co/300x200/cccccc/333333?text=News+Image+8PM-2",
+                    caption: "Supply chain issues and climate impact.",
+                    text: `Analysts predict a significant increase in global food prices over the coming months, attributed to ongoing supply chain disruptions and the impact of climate change on agricultural output.`
+                }, {
+                    id: "Organics-3",
+                    headline: "AI Ethics Debate Heats Up in Congress",
+                    image: "https://placehold.co/300x200/cccccc/333333?text=News+Image+8PM-3",
+                    caption: "Legislators grapple with artificial intelligence regulations.",
+                    text: `The debate over artificial intelligence ethics has intensified in Congress, with lawmakers discussing potential regulations for AI development and deployment to ensure responsible innovation.`
+                }, {
+                    id: "Organics-4",
+                    headline: "Major Cyberattack Hits Financial Institutions",
+                    image: "https://placehold.co/300x200/cccccc/333333?text=News+Image+8PM-4",
+                    caption: "Security breaches cause widespread concern.",
+                    text: `Several major financial institutions have been targeted in a sophisticated cyberattack, leading to temporary service disruptions and heightened concerns about digital security across the sector.`
+                }, {
+                    id: "Organics-5",
+                    headline: "Breakthrough in Cancer Treatment Announced",
+                    image: "https://placehold.co/300x200/cccccc/333333?text=News+Image+8PM-5",
+                    caption: "New therapy shows promising results.",
+                    text: `Scientists have announced a significant breakthrough in cancer treatment, with a new experimental therapy showing highly promising results in clinical trials. This development offers new hope for patients worldwide.`
+                }],
+                "Dissonace": [{
+                    id: "Dissonace-1",
+                    headline: "New Space Telescope Discovers Exoplanet",
+                    image: "https://placehold.co/300x200/cccccc/333333?text=News+Image+8PM-1",
+                    caption: "Astronomers excited by new findings.",
+                    text: `A newly launched space telescope has made its first significant discovery: a potentially habitable exoplanet orbiting a distant star. This breakthrough opens new avenues for the search for extraterrestrial life.`
+                }, {
+                    id: "Dissonace-2",
+                    headline: "Global Food Prices Expected to Rise",
+                    image: "https://placehold.co/300x200/cccccc/333333?text=News+Image+8PM-2",
+                    caption: "Supply chain issues and climate impact.",
+                    text: `Analysts predict a significant increase in global food prices over the coming months, attributed to ongoing supply chain disruptions and the impact of climate change on agricultural output.`
+                }, {
+                    id: "Dissonace-3",
+                    headline: "AI Ethics Debate Heats Up in Congress",
+                    image: "https://placehold.co/300x200/cccccc/333333?text=News+Image+8PM-3",
+                    caption: "Legislators grapple with artificial intelligence regulations.",
+                    text: `The debate over artificial intelligence ethics has intensified in Congress, with lawmakers discussing potential regulations for AI development and deployment to ensure responsible innovation.`
+                }, {
+                    id: "Dissonace-4",
+                    headline: "Major Cyberattack Hits Financial Institutions",
+                    image: "https://placehold.co/300x200/cccccc/333333?text=News+Image+8PM-4",
+                    caption: "Security breaches cause widespread concern.",
+                    text: `Several major financial institutions have been targeted in a sophisticated cyberattack, leading to temporary service disruptions and heightened concerns about digital security across the sector.`
+                }, {
+                    id: "Dissonace-5",
+                    headline: "Breakthrough in Cancer Treatment Announced",
+                    image: "https://placehold.co/300x200/cccccc/333333?text=News+Image+8PM-5",
+                    caption: "New therapy shows promising results.",
+                    text: `Scientists have announced a significant breakthrough in cancer treatment, with a new experimental therapy showing highly promising results in clinical trials. This development offers new hope for patients worldwide.`
+                }]
+            };
+
+            function renderNewsHeadlines(time) {
+                newsHeadlinesSection.innerHTML = '';
+                currentNewsData = allNewsData[time] || [];
+
+                if (currentNewsData.length > 0) {
+                    currentNewsData.forEach(newsItem => {
+                        const div = document.createElement('div');
+                        div.classList.add('accordion-item');
+                        div.innerHTML = `
+                            <h2 class="accordion-header" id="heading${newsItem.id}">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${newsItem.id}" aria-expanded="false" aria-controls="collapse${newsItem.id}">
+                                    ${newsItem.headline}
+                                </button>
+                            </h2>
+                            <div id="collapse${newsItem.id}" class="accordion-collapse collapse" aria-labelledby="heading${newsItem.id}" data-bs-parent="#newsHeadlinesSection">
+                                <div class="accordion-body">
+                                    <img src="${newsItem.image}" alt="News Image" class="img-fluid mb-3 rounded">
+                                    <p class="text-muted mb-2">${newsItem.caption}</p>
+                                    <p>${newsItem.text}</p>
+                                </div>
+                            </div>
+                        `;
+                        newsHeadlinesSection.appendChild(div);
+                    });
+                } else {
+                    newsHeadlinesSection.innerHTML = '<p class="text-center text-muted mt-4">No news available for this time.</p>';
+                }
+            }
+
+            dateDisplay.addEventListener('click', () => {
+                timeTabs.classList.remove('d-none');
+                timeTabs.style.display = 'flex';
+                activeTimeDisplay.classList.add('d-none');
+
+                newsHeadlinesSection.classList.add('d-none');
+                expandSimplifyBtn.classList.add('d-none');
+            });
+
+            timeTabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    timeTabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    currentActiveTime = button.textContent;
+
+                    renderNewsHeadlines(currentActiveTime);
+
+                    newsHeadlinesSection.classList.remove('d-none');
+
+                    expandSimplifyBtn.classList.remove('d-none');
+                    expandSimplifyBtn.textContent = 'Expand all';
+                    isExpanded = false;
+
+                    timeTabs.classList.add('d-none');
+                    activeTimeDisplay.textContent = currentActiveTime;
+                    activeTimeDisplay.classList.remove('d-none');
+                });
+            });
+
+            expandSimplifyBtn.addEventListener('click', () => {
+                const allCollapseElements = newsHeadlinesSection.querySelectorAll('.accordion-collapse');
+                if (!isExpanded) {
+                    allCollapseElements.forEach(collapseEl => {
+                        const bsCollapse = bootstrap.Collapse.getInstance(collapseEl);
+                        if (bsCollapse) {
+                            bsCollapse.show();
+                        } else {
+                            new bootstrap.Collapse(collapseEl, { toggle: true }).show();
+                        }
+                    });
+                    expandSimplifyBtn.textContent = 'Simplify';
+                    isExpanded = true;
+                } else {
+                    allCollapseElements.forEach(collapseEl => {
+                        const bsCollapse = bootstrap.Collapse.getInstance(collapseEl);
+                        if (bsCollapse) {
+                            bsCollapse.hide();
+                        } else {
+                            new bootstrap.Collapse(collapseEl, { toggle: false }).hide();
+                        }
+                    });
+                    expandSimplifyBtn.textContent = 'Expand all';
+                    isExpanded = false;
+                }
+            });
+
+            const body = document.body;
+            const DARK_MODE_KEY = 'darkModeEnabled';
+
+            function applyDarkMode(enable) {
+                if (enable) {
+                    body.classList.add('dark-mode');
+                } else {
+                    body.classList.remove('dark-mode');
+                }
+                localStorage.setItem(DARK_MODE_KEY, enable);
+            }
+
+            const savedDarkMode = localStorage.getItem(DARK_MODE_KEY);
+            if (savedDarkMode === 'true') {
+                applyDarkMode(true);
+            } else {
+                applyDarkMode(false);
+            }
+
+            darkModeToggle.addEventListener('click', () => {
+                const isCurrentlyDarkMode = body.classList.contains('dark-mode');
+                applyDarkMode(!isCurrentlyDarkMode);
+            });
+
+            // --- Mouse Animation Logic (Desktop Only) ---
+            const canvas = document.getElementById('mouseAnimationCanvas');
+            const ctx = canvas.getContext('2d');
+            const particles = [];
+            const ripples = [];
+            const MAX_PARTICLES = 100;
+            const PARTICLE_SIZE = 4;
+            const NEON_GREEN_COLOR = '0, 255, 136';
+
+            let lastMouseX = -1;
+            let lastMouseY = -1;
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+
+            class Particle {
+                constructor(x, y) {
+                    this.x = x + (Math.random() - 0.5) * 5; // Smaller random offset for tighter trail
+                    this.y = y + (Math.random() - 0.5) * 5;
+                    this.size = PARTICLE_SIZE;
+                    this.alpha = 0.7;
+                    this.color = `rgba(${NEON_GREEN_COLOR}, `;
+                }
+
+                update() {
+                    this.size *= 0.98; // Slower shrink rate
+                    this.alpha -= 0.01; // Slower fade out rate
+                }
+
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color + this.alpha + ')';
+                    ctx.fill();
+                }
+            }
+
+            class Ripple {
+                constructor(x, y) {
+                    this.x = x;
+                    this.y = y;
+                    this.radius = 0;
+                    this.alpha = 1;
+                    this.lineWidth = 3; // Adjusted for a smoother line
+                    this.color = `rgba(${NEON_GREEN_COLOR}, `;
+                }
+
+                update() {
+                    this.radius += 2; // Slower expansion
+                    this.alpha -= 0.015; // Slower fade
+                    this.lineWidth *= 0.95; // Slower thinning
+                }
+
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.strokeStyle = this.color + this.alpha + ')';
+                    ctx.lineWidth = this.lineWidth;
+                    ctx.stroke();
+                }
+            }
+
+            const isDesktop = window.innerWidth > 768;
+
+            if (isDesktop) {
+                console.log("Desktop detected, mouse animation enabled.");
+                resizeCanvas();
+                window.addEventListener('resize', resizeCanvas);
+
+                document.addEventListener('mousemove', (e) => {
+
+                    if (particles.length < MAX_PARTICLES) {
+                        particles.push(new Particle(e.clientX, e.clientY));
+                    }
+                    lastMouseX = e.clientX;
+                    lastMouseY = e.clientY;
+                });
+
+
+                let mouseMoveTimeout;
+                document.addEventListener('mousemove', () => {
+                    clearTimeout(mouseMoveTimeout);
+                    mouseMoveTimeout = setTimeout(() => {
+
+                    }, 100);
+                });
+
+
+                document.addEventListener('click', (e) => {
+                    ripples.push(new Ripple(e.clientX, e.clientY));
+                });
+
+                function animateMouseEffects() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    for (let i = particles.length - 1; i >= 0; i--) {
+                        const p = particles[i];
+                        p.update();
+                        p.draw();
+
+                        if (p.alpha <= 0.005 || p.size <= 0.05) {
+                            particles.splice(i, 1);
+                        }
+                    }
+
+                    for (let i = ripples.length - 1; i >= 0; i--) {
+                        const r = ripples[i];
+                        r.update();
+                        r.draw();
+
+                        if (r.alpha <= 0.005 || r.lineWidth <= 0.02) {
+                            ripples.splice(i, 1);
+                        }
+                    }
+                    requestAnimationFrame(animateMouseEffects);
+                }
+                animateMouseEffects();
+            } else {
+                console.log("Mobile detected, mouse animation disabled.");
+            }
+        });
+    </script>
+
+    <!-- mouse animation js -->
+
+    <canvas id="mouseAnimationCanvas"></canvas>
+</body>
+
+</html>
