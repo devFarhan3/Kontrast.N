@@ -283,7 +283,11 @@
      color: #6b7280;
  } */
 
-
+.knontrst_sec {
+    /* max-height: 400px; */
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
 
  @media (max-width: 768px) {
      #mouseAnimationCanvas {
@@ -333,6 +337,7 @@
          font-size: 16px;
          line-height: 24px;
          color: var(--text-color);
+         font-family: Georgia, 'Times New Roman', Times, serif;
      }
 
 

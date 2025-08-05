@@ -18,9 +18,8 @@
     <div class="mobile-frame">
         <div class="notch"></div>
         <div class="header">
-            <span id="dateDisplay" class="date-section d-flex justify-content-start align-items-start">©
-                Kontrast.N°2025</span>
-            <div class="d-flex justify-content-between align-items-center mb-3 w-100">
+            <span id="dateDisplay" class="date-section d-flex justify-content-start align-items-start"> Kontrast</span>
+            <div class="d-flex justify-content-between align-items-center mb-3 w-100" id="categoryTabs">
                 <div class="d-flex align-items-center gap-2">
                     <div id="timeTabs" class="time-tabs d-none">
                         <span class="time-tab-btn" data-time="Systems">Systems</span>
@@ -35,18 +34,52 @@
             <button id="darkModeToggle" aria-label="Toggle Dark Mode">
                 &#9789;
             </button>
-        </div>
 
+
+        </div>
+        <div class="knontrst_sec text-start">
+
+            <span class="date-section text-start" style="pointer-events: none;">KONTRAST.JOURNAL</span>
+            <p class="date-section text-start">Ein Raum für Gedanken, die sich weigern, in Schubladen zu passen.</p>
+
+            <span class="date-section text-start" style="pointer-events: none;">SYSTEME</span>
+            <p class="date-section text-start">(Politik | Struktur | Macht)
+                Alles, was uns umgibt – und was wir ändern könnten, wenn wir es durchschauen.
+
+            </p>
+
+            <span class="date-section text-start" style="pointer-events: none;">MATERIE</span>
+            <p class="date-section text-start">
+                (Architektur | Material | Handwerk)
+                Alles, was uns umgibt – und was wir ändern könnten, wenn wir es durchschauen.
+                MATERIE
+            </p>
+
+            <span class="date-section text-start" style="pointer-events: none;">ORGANISCHES</span>
+            <p class="date-section text-start">
+                (Natur | Ökologie | Leben)
+                Was wächst, was atmet, was uns überdauert – und warum wir es trotzdem ignorieren.
+            </p>
+
+            <span class="date-section text-start" style="pointer-events: none;">DISSONANZ</span>
+            <p class="date-section text-start">
+                (Kultur | Kritik | Widerspruch)
+                Die Schönheit des Widerspruchs, der Lärm des Neuen, das Unbehagen am Gewohnten.
+            </p>
+
+
+
+        </div>
         <div id="newsHeadlinesSection" class="news-headlines-section accordion">
         </div>
 
         <div class="footer">
             <!-- <a href="#">Sign up</a>
             <a href="#">Log in</a> -->
-            <span>© Kontrast.N°2025</span>
+            <span>Kontrast</span>
         </div>
     </div>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -429,6 +462,22 @@
     <!-- mouse animation js -->
 
     <canvas id="mouseAnimationCanvas"></canvas>
+
+
+
+
+    <script>
+        $(document).ready(function () {
+
+            $(".header , #categoryTabs").click(function () {
+
+
+                $(".knontrst_sec").hide();
+
+            });
+
+        });
+    </script>
 </body>
 
 </html>
