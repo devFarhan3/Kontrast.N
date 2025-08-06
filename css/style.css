@@ -280,6 +280,18 @@
      color: #fff;
  }
 
+    .knontrst_sec{
+        pointer-events: none;
+    }
+
+
+     .knontrst_sec span {
+          font-size: 12px !important;
+        line-height: 24px;
+         color: var(--text-color);
+          font-family: 'SF Pro Display', sans-serif;
+     }
+
  /* css mouseAnimationCanvas */
  #mouseAnimationCanvas {
      position: fixed;
@@ -348,11 +360,13 @@
      .news-headlines-section .accordion-button,
      .expand-simplify-option,
      .news-headlines-section .accordion-body {
-       font-size: 13px;
+       font-size: 12px !important;
         line-height: 24px;
          color: var(--text-color);
           font-family: 'SF Pro Display', sans-serif;
+         
      }
+
 
 
      .text-muted {
