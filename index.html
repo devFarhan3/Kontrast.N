@@ -22,10 +22,10 @@
             <div class="d-flex justify-content-between align-items-center mb-3 w-100" id="categoryTabs">
                 <div class="d-flex align-items-center gap-2">
                     <div id="timeTabs" class="time-tabs d-none">
-                        <span class="time-tab-btn" data-time="Systems">Systems</span>
-                        <span class="time-tab-btn" data-time="Matter">Matter</span>
-                        <span class="time-tab-btn" data-time="Organics">Organics</span>
-                        <span class="time-tab-btn" data-time="Dissonace">Dissonace</span>
+                        <span class="time-tab-btn systemsTab" data-time="Systems" id="systemsTab">Systems</span>
+                        <span class="time-tab-btn matterTab" data-time="Matter" id="matterTab">Matter</span>
+                        <span class="time-tab-btn organicsTab" data-time="Organics" id="organicsTab">Organics</span>
+                        <span class="time-tab-btn dissonaceTab" data-time="Dissonace" id="dissonaceTab">Dissonace</span>
                     </div>
                     <span id="activeTimeDisplay" class="active-time-display d-none"></span>
                 </div>
@@ -79,7 +79,7 @@
             <span>Kontrast</span>
         </div>
     </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -88,7 +88,7 @@
             const dateDisplay = document.getElementById('dateDisplay');
             const timeTabs = document.getElementById('timeTabs');
             const timeTabButtons = document.querySelectorAll('.time-tab-btn');
-            const activeTimeDisplay = document.getElementById('activeTimeDisplay');
+            // const activeTimeDisplay = document.getElementById('activeTimeDisplay');
             const expandSimplifyBtn = document.getElementById('expandSimplify');
             const newsHeadlinesSection = document.getElementById('newsHeadlinesSection');
             const darkModeToggle = document.getElementById('darkModeToggle');
@@ -334,69 +334,134 @@
                 applyDarkMode(!isCurrentlyDarkMode);
             });
 
-            // --- Mouse Animation Logic (Desktop Only) ---
-            const canvas = document.getElementById('mouseAnimationCanvas');
-            const ctx = canvas.getContext('2d');
-            const particles = [];
-            const ripples = [];
-            const MAX_PARTICLES = 100;
-            const PARTICLE_SIZE = 4;
-            const NEON_GREEN_COLOR = '0, 255, 136';
+           const canvas = document.getElementById('mouseAnimationCanvas');
+        const ctx = canvas.getContext('2d');
+        const particles = [];
+        const ripples = [];
+        const MAX_PARTICLES = 100;
+        const PARTICLE_SIZE = 4;
 
-            let lastMouseX = -1;
-            let lastMouseY = -1;
+        const CATEGORY_COLORS = {
+            "Systems": "143, 179, 199",
+            "Matter": "193, 124, 101",
+            "Organics": "143, 165, 125",
+            "Dissonace": "154, 134, 164"
+        };
 
-            function resizeCanvas() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
+        let currentAnimationColor = CATEGORY_COLORS["Systems"];
+
+        let lastMouseX = -1;
+        let lastMouseY = -1;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x + (Math.random() - 0.5) * 5;
+                this.y = y + (Math.random() - 0.5) * 5;
+                this.size = PARTICLE_SIZE;
+                this.alpha = 0.7;
+                this.color = `rgba(${color}, `;
             }
 
-            class Particle {
-                constructor(x, y) {
-                    this.x = x + (Math.random() - 0.5) * 5; // Smaller random offset for tighter trail
-                    this.y = y + (Math.random() - 0.5) * 5;
-                    this.size = PARTICLE_SIZE;
-                    this.alpha = 0.7;
-                    this.color = `rgba(${NEON_GREEN_COLOR}, `;
-                }
+            update() {
+                this.size *= 0.98;
+                this.alpha -= 0.01;
+            }
 
-                update() {
-                    this.size *= 0.98; // Slower shrink rate
-                    this.alpha -= 0.01; // Slower fade out rate
-                }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color + this.alpha + ')';
+                ctx.fill();
+            }
+        }
 
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fillStyle = this.color + this.alpha + ')';
-                    ctx.fill();
+        class Ripple {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.radius = 0;
+                this.alpha = 1;
+                this.lineWidth = 3;
+                this.color = `rgba(${color}, `;
+            }
+
+            update() {
+                this.radius += 2;
+                this.alpha -= 0.015;
+                this.lineWidth *= 0.95;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.strokeStyle = this.color + this.alpha + ')';
+                ctx.lineWidth = this.lineWidth;
+                ctx.stroke();
+            }
+        }
+
+        // Removed the isDesktop check to enable animation on all screen sizes
+        console.log("Mouse animation enabled.");
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        document.addEventListener('mousemove', (e) => {
+            if (particles.length < MAX_PARTICLES) {
+                particles.push(new Particle(e.clientX, e.clientY, currentAnimationColor));
+            }
+            lastMouseX = e.clientX;
+            lastMouseY = e.clientY;
+        });
+
+        document.addEventListener('click', (e) => {
+            ripples.push(new Ripple(e.clientX, e.clientY, currentAnimationColor));
+        });
+
+        const categoryTabButtons = document.querySelectorAll('.time-tab-btn');
+        const activeTimeDisplay = document.getElementById('activeTimeDisplay');
+
+        categoryTabButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const category = e.target.dataset.time;
+                currentAnimationColor = CATEGORY_COLORS[category];
+
+                categoryTabButtons.forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+
+                activeTimeDisplay.textContent = category;
+            });
+        });
+
+        function animateMouseEffects() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.update();
+                p.draw();
+
+                if (p.alpha <= 0.005 || p.size <= 0.05) {
+                    particles.splice(i, 1);
                 }
             }
 
-            class Ripple {
-                constructor(x, y) {
-                    this.x = x;
-                    this.y = y;
-                    this.radius = 0;
-                    this.alpha = 1;
-                    this.lineWidth = 3; // Adjusted for a smoother line
-                    this.color = `rgba(${NEON_GREEN_COLOR}, `;
-                }
+            for (let i = ripples.length - 1; i >= 0; i--) {
+                const r = ripples[i];
+                r.update();
+                r.draw();
 
-                update() {
-                    this.radius += 2; // Slower expansion
-                    this.alpha -= 0.015; // Slower fade
-                    this.lineWidth *= 0.95; // Slower thinning
-                }
-
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                    ctx.strokeStyle = this.color + this.alpha + ')';
-                    ctx.lineWidth = this.lineWidth;
-                    ctx.stroke();
+                if (r.alpha <= 0.005 || r.lineWidth <= 0.02) {
+                    ripples.splice(i, 1);
                 }
             }
+            requestAnimationFrame(animateMouseEffects);
+        }
+        animateMouseEffects();
 
             const isDesktop = window.innerWidth > 768;
 
