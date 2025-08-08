@@ -11,76 +11,71 @@
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+
+    <canvas id="mouseAnimationCanvas"></canvas>
+
     <div class="mobile-frame">
         <div class="notch"></div>
         <div class="header">
-            <span id="dateDisplay" class="date-section d-flex justify-content-start align-items-start"> Kontrast</span>
-            <div class="d-flex justify-content-between align-items-center mb-3 w-100" id="categoryTabs">
+            <span id="dateDisplay" class="date-section d-flex justify-content-start align-items-start"> Kontrast.N°2025</span>
+            <div class="d-flex justify-content-between align-items-center mb-2 w-100" id="categoryTabs">
                 <div class="d-flex align-items-center gap-2">
+                    <span id="backButton" class="back-btn d-none">
+                        <i class="bi bi-arrow-left"></i>
+                    </span>
+                    <span id="activeTimeDisplay" class="active-time-display d-none"></span>
                     <div id="timeTabs" class="time-tabs d-none">
                         <span class="time-tab-btn systemsTab" data-time="Systems" id="systemsTab">Systems</span>
                         <span class="time-tab-btn matterTab" data-time="Matter" id="matterTab">Matter</span>
                         <span class="time-tab-btn organicsTab" data-time="Organics" id="organicsTab">Organics</span>
                         <span class="time-tab-btn dissonaceTab" data-time="Dissonace" id="dissonaceTab">Dissonace</span>
                     </div>
-                    <span id="activeTimeDisplay" class="active-time-display d-none"></span>
                 </div>
                 <span id="expandSimplify" class="expand-simplify-option d-none">Expand all</span>
             </div>
             <button id="darkModeToggle" aria-label="Toggle Dark Mode">
                 &#9789;
             </button>
-
-
         </div>
-        <div class="knontrst_sec text-start">
 
+        <div class="knontrst_sec text-start">
             <span class="date-section text-start" style="pointer-events: none;">KONTRAST.JOURNAL</span>
             <p class="date-section text-start">Ein Raum für Gedanken, die sich weigern, in Schubladen zu passen.</p>
-
             <span class="date-section text-start" style="pointer-events: none;">SYSTEME</span>
-            <p class="date-section text-start">(Politik | Struktur | Macht)
+            <p class="date-section text-start">
+                (Politik | Struktur | Macht)
                 Alles, was uns umgibt – und was wir ändern könnten, wenn wir es durchschauen.
-
             </p>
-
             <span class="date-section text-start" style="pointer-events: none;">MATERIE</span>
             <p class="date-section text-start">
                 (Architektur | Material | Handwerk)
                 Alles, was uns umgibt – und was wir ändern könnten, wenn wir es durchschauen.
-                MATERIE
             </p>
-
             <span class="date-section text-start" style="pointer-events: none;">ORGANISCHES</span>
             <p class="date-section text-start">
                 (Natur | Ökologie | Leben)
                 Was wächst, was atmet, was uns überdauert – und warum wir es trotzdem ignorieren.
             </p>
-
             <span class="date-section text-start" style="pointer-events: none;">DISSONANZ</span>
             <p class="date-section text-start">
                 (Kultur | Kritik | Widerspruch)
                 Die Schönheit des Widerspruchs, der Lärm des Neuen, das Unbehagen am Gewohnten.
             </p>
-
-
-
         </div>
+
         <div id="newsHeadlinesSection" class="news-headlines-section accordion">
         </div>
 
         <div class="footer">
-            <!-- <a href="#">Sign up</a>
-            <a href="#">Log in</a> -->
-            <span>Kontrast</span>
+            <span>Kontrast.N°2025</span>
         </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <!-- Bootstrap 5 JS -->
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
@@ -88,10 +83,14 @@
             const dateDisplay = document.getElementById('dateDisplay');
             const timeTabs = document.getElementById('timeTabs');
             const timeTabButtons = document.querySelectorAll('.time-tab-btn');
-            // const activeTimeDisplay = document.getElementById('activeTimeDisplay');
+            const activeTimeDisplay = document.getElementById('activeTimeDisplay');
             const expandSimplifyBtn = document.getElementById('expandSimplify');
             const newsHeadlinesSection = document.getElementById('newsHeadlinesSection');
             const darkModeToggle = document.getElementById('darkModeToggle');
+            const knontrstSec = document.querySelector('.knontrst_sec');
+            const header = document.querySelector('.header');
+            const categoryTabs = document.getElementById('categoryTabs');
+            const backButton = document.getElementById('backButton');
 
             let isExpanded = false;
             let currentActiveTime = '';
@@ -103,8 +102,7 @@
                     headline: "Volunteers Save Afghan Care For Millions",
                     image: "https://placehold.co/300x200/cccccc/333333?text=News+Image+10AM-1",
                     caption: "Blake, Wm. Christ Raising Jairus’s Daughter. 1799.",
-                    text: `UNICEF has prevented the collapse of two-thirds of Afghanistan’s healthcare system by running 96 hospitals and 2,400 clinics with 28,000 staff and 32,000 volunteers. The effort has supported over 2.2 million births since 2021.
-                                Working mostly in remote valleys, volunteers provide critical care, vaccinations, and health education to communities once isolated from modern infrastructure.`
+                    text: `UNICEF has prevented the collapse of two-thirds of Afghanistan’s healthcare system by running 96 hospitals and 2,400 clinics with 28,000 staff and 32,000 volunteers. The effort has supported over 2.2 million births since 2021. Working mostly in remote valleys, volunteers provide critical care, vaccinations, and health education to communities once isolated from modern infrastructure.`
                 }, {
                     id: "Systems-2",
                     headline: "Garden Found Beneath Jesus' Burial Site",
@@ -234,19 +232,19 @@
                         const div = document.createElement('div');
                         div.classList.add('accordion-item');
                         div.innerHTML = `
-                            <h2 class="accordion-header" id="heading${newsItem.id}">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${newsItem.id}" aria-expanded="false" aria-controls="collapse${newsItem.id}">
-                                    ${newsItem.headline}
-                                </button>
-                            </h2>
-                            <div id="collapse${newsItem.id}" class="accordion-collapse collapse" aria-labelledby="heading${newsItem.id}" data-bs-parent="#newsHeadlinesSection">
-                                <div class="accordion-body">
-                                    <img src="${newsItem.image}" alt="News Image" class="img-fluid mb-3 rounded">
-                                    <p class="text-muted mb-2">${newsItem.caption}</p>
-                                    <p>${newsItem.text}</p>
+                                <h2 class="accordion-header" id="heading${newsItem.id}">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${newsItem.id}" aria-expanded="false" aria-controls="collapse${newsItem.id}">
+                                        ${newsItem.headline}
+                                    </button>
+                                </h2>
+                                <div id="collapse${newsItem.id}" class="accordion-collapse collapse" aria-labelledby="heading${newsItem.id}" data-bs-parent="#newsHeadlinesSection">
+                                    <div class="accordion-body">
+                                        <img src="${newsItem.image}" alt="News Image" class="img-fluid mb-3 rounded">
+                                        <p class="text-muted mb-2">${newsItem.caption}</p>
+                                        <p>${newsItem.text}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        `;
+                            `;
                         newsHeadlinesSection.appendChild(div);
                     });
                 } else {
@@ -255,31 +253,56 @@
             }
 
             dateDisplay.addEventListener('click', () => {
+                knontrstSec.classList.remove('d-flex');
+                knontrstSec.classList.add('d-none');
                 timeTabs.classList.remove('d-none');
-                timeTabs.style.display = 'flex';
                 activeTimeDisplay.classList.add('d-none');
-
                 newsHeadlinesSection.classList.add('d-none');
                 expandSimplifyBtn.classList.add('d-none');
+                backButton.classList.add('d-none');
+            });
+
+            header.addEventListener('click', (e) => {
+                if (e.target.id === 'dateDisplay' || e.target.closest('#categoryTabs')) {
+                    knontrstSec.classList.remove('d-flex');
+                    knontrstSec.classList.add('d-none');
+                }
             });
 
             timeTabButtons.forEach(button => {
                 button.addEventListener('click', () => {
-                    timeTabButtons.forEach(btn => btn.classList.remove('active'));
+                    timeTabButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.style.color = 'var(--text-color)';
+                    });
                     button.classList.add('active');
                     currentActiveTime = button.textContent;
-
                     renderNewsHeadlines(currentActiveTime);
-
                     newsHeadlinesSection.classList.remove('d-none');
-
                     expandSimplifyBtn.classList.remove('d-none');
                     expandSimplifyBtn.textContent = 'Expand all';
                     isExpanded = false;
-
                     timeTabs.classList.add('d-none');
                     activeTimeDisplay.textContent = currentActiveTime;
                     activeTimeDisplay.classList.remove('d-none');
+                    backButton.classList.remove('d-none');
+
+                    const category = button.dataset.time;
+                    const categoryColor = CATEGORY_TEXT_COLORS[category];
+                    button.style.color = categoryColor;
+                    activeTimeDisplay.style.color = categoryColor;
+                });
+            });
+            
+            backButton.addEventListener('click', () => {
+                backButton.classList.add('d-none');
+                activeTimeDisplay.classList.add('d-none');
+                expandSimplifyBtn.classList.add('d-none');
+                newsHeadlinesSection.classList.add('d-none');
+                timeTabs.classList.remove('d-none');
+                timeTabButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.style.color = 'var(--text-color)';
                 });
             });
 
@@ -291,7 +314,9 @@
                         if (bsCollapse) {
                             bsCollapse.show();
                         } else {
-                            new bootstrap.Collapse(collapseEl, { toggle: true }).show();
+                            new bootstrap.Collapse(collapseEl, {
+                                toggle: true
+                            }).show();
                         }
                     });
                     expandSimplifyBtn.textContent = 'Simplify';
@@ -302,7 +327,9 @@
                         if (bsCollapse) {
                             bsCollapse.hide();
                         } else {
-                            new bootstrap.Collapse(collapseEl, { toggle: false }).hide();
+                            new bootstrap.Collapse(collapseEl, {
+                                toggle: false
+                            }).hide();
                         }
                     });
                     expandSimplifyBtn.textContent = 'Expand all';
@@ -334,215 +361,122 @@
                 applyDarkMode(!isCurrentlyDarkMode);
             });
 
-           const canvas = document.getElementById('mouseAnimationCanvas');
-        const ctx = canvas.getContext('2d');
-        const particles = [];
-        const ripples = [];
-        const MAX_PARTICLES = 100;
-        const PARTICLE_SIZE = 4;
+            const canvas = document.getElementById('mouseAnimationCanvas');
+            const ctx = canvas.getContext('2d');
+            const particles = [];
+            const ripples = [];
+            const MAX_PARTICLES = 100;
+            const PARTICLE_SIZE = 4;
 
-        const CATEGORY_COLORS = {
-            "Systems": "143, 179, 199",
-            "Matter": "193, 124, 101",
-            "Organics": "143, 165, 125",
-            "Dissonace": "154, 134, 164"
-        };
+            const CATEGORY_COLORS = {
+                "Systems": "143, 179, 199",
+                "Matter": "193, 124, 101",
+                "Organics": "143, 165, 125",
+                "Dissonace": "154, 134, 164"
+            };
 
-        let currentAnimationColor = CATEGORY_COLORS["Systems"];
+            const CATEGORY_TEXT_COLORS = {
+                "Systems": "#8FB3C7",
+                "Matter": "#C17C65",
+                "Organics": "#8FA57D",
+                "Dissonace": "#9A86A4"
+            };
 
-        let lastMouseX = -1;
-        let lastMouseY = -1;
+            let currentAnimationColor = CATEGORY_COLORS["Systems"];
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-
-        class Particle {
-            constructor(x, y, color) {
-                this.x = x + (Math.random() - 0.5) * 5;
-                this.y = y + (Math.random() - 0.5) * 5;
-                this.size = PARTICLE_SIZE;
-                this.alpha = 0.7;
-                this.color = `rgba(${color}, `;
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
             }
 
-            update() {
-                this.size *= 0.98;
-                this.alpha -= 0.01;
+            class Particle {
+                constructor(x, y, color) {
+                    this.x = x + (Math.random() - 0.5) * 5;
+                    this.y = y + (Math.random() - 0.5) * 5;
+                    this.size = PARTICLE_SIZE;
+                    this.alpha = 0.7;
+                    this.color = `rgba(${color}, `;
+                }
+                update() {
+                    this.size *= 0.98;
+                    this.alpha -= 0.01;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color + this.alpha + ')';
+                    ctx.fill();
+                }
             }
 
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = this.color + this.alpha + ')';
-                ctx.fill();
+            class Ripple {
+                constructor(x, y, color) {
+                    this.x = x;
+                    this.y = y;
+                    this.radius = 0;
+                    this.alpha = 1;
+                    this.lineWidth = 3;
+                    this.color = `rgba(${color}, `;
+                }
+                update() {
+                    this.radius += 2;
+                    this.alpha -= 0.015;
+                    this.lineWidth *= 0.95;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.strokeStyle = this.color + this.alpha + ')';
+                    ctx.lineWidth = this.lineWidth;
+                    ctx.stroke();
+                }
             }
-        }
 
-        class Ripple {
-            constructor(x, y, color) {
-                this.x = x;
-                this.y = y;
-                this.radius = 0;
-                this.alpha = 1;
-                this.lineWidth = 3;
-                this.color = `rgba(${color}, `;
-            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
 
-            update() {
-                this.radius += 2;
-                this.alpha -= 0.015;
-                this.lineWidth *= 0.95;
-            }
-
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.strokeStyle = this.color + this.alpha + ')';
-                ctx.lineWidth = this.lineWidth;
-                ctx.stroke();
-            }
-        }
-
-        // Removed the isDesktop check to enable animation on all screen sizes
-        console.log("Mouse animation enabled.");
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        document.addEventListener('mousemove', (e) => {
-            if (particles.length < MAX_PARTICLES) {
-                particles.push(new Particle(e.clientX, e.clientY, currentAnimationColor));
-            }
-            lastMouseX = e.clientX;
-            lastMouseY = e.clientY;
-        });
-
-        document.addEventListener('click', (e) => {
-            ripples.push(new Ripple(e.clientX, e.clientY, currentAnimationColor));
-        });
-
-        const categoryTabButtons = document.querySelectorAll('.time-tab-btn');
-        const activeTimeDisplay = document.getElementById('activeTimeDisplay');
-
-        categoryTabButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                const category = e.target.dataset.time;
-                currentAnimationColor = CATEGORY_COLORS[category];
-
-                categoryTabButtons.forEach(btn => btn.classList.remove('active'));
-                e.target.classList.add('active');
-
-                activeTimeDisplay.textContent = category;
+            document.addEventListener('mousemove', (e) => {
+                if (particles.length < MAX_PARTICLES) {
+                    particles.push(new Particle(e.clientX, e.clientY, currentAnimationColor));
+                }
             });
-        });
 
-        function animateMouseEffects() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            document.addEventListener('click', (e) => {
+                ripples.push(new Ripple(e.clientX, e.clientY, currentAnimationColor));
+            });
 
-            for (let i = particles.length - 1; i >= 0; i--) {
-                const p = particles[i];
-                p.update();
-                p.draw();
-
-                if (p.alpha <= 0.005 || p.size <= 0.05) {
-                    particles.splice(i, 1);
-                }
-            }
-
-            for (let i = ripples.length - 1; i >= 0; i--) {
-                const r = ripples[i];
-                r.update();
-                r.draw();
-
-                if (r.alpha <= 0.005 || r.lineWidth <= 0.02) {
-                    ripples.splice(i, 1);
-                }
-            }
-            requestAnimationFrame(animateMouseEffects);
-        }
-        animateMouseEffects();
-
-            const isDesktop = window.innerWidth > 768;
-
-            if (isDesktop) {
-                console.log("Desktop detected, mouse animation enabled.");
-                resizeCanvas();
-                window.addEventListener('resize', resizeCanvas);
-
-                document.addEventListener('mousemove', (e) => {
-
-                    if (particles.length < MAX_PARTICLES) {
-                        particles.push(new Particle(e.clientX, e.clientY));
-                    }
-                    lastMouseX = e.clientX;
-                    lastMouseY = e.clientY;
+            timeTabButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const category = e.target.dataset.time;
+                    currentAnimationColor = CATEGORY_COLORS[category];
                 });
+            });
 
-
-                let mouseMoveTimeout;
-                document.addEventListener('mousemove', () => {
-                    clearTimeout(mouseMoveTimeout);
-                    mouseMoveTimeout = setTimeout(() => {
-
-                    }, 100);
-                });
-
-
-                document.addEventListener('click', (e) => {
-                    ripples.push(new Ripple(e.clientX, e.clientY));
-                });
-
-                function animateMouseEffects() {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                    for (let i = particles.length - 1; i >= 0; i--) {
-                        const p = particles[i];
-                        p.update();
-                        p.draw();
-
-                        if (p.alpha <= 0.005 || p.size <= 0.05) {
-                            particles.splice(i, 1);
-                        }
+            function animateMouseEffects() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    const p = particles[i];
+                    p.update();
+                    p.draw();
+                    if (p.alpha <= 0.005 || p.size <= 0.05) {
+                        particles.splice(i, 1);
                     }
-
-                    for (let i = ripples.length - 1; i >= 0; i--) {
-                        const r = ripples[i];
-                        r.update();
-                        r.draw();
-
-                        if (r.alpha <= 0.005 || r.lineWidth <= 0.02) {
-                            ripples.splice(i, 1);
-                        }
-                    }
-                    requestAnimationFrame(animateMouseEffects);
                 }
-                animateMouseEffects();
-            } else {
-                console.log("Mobile detected, mouse animation disabled.");
+                for (let i = ripples.length - 1; i >= 0; i--) {
+                    const r = ripples[i];
+                    r.update();
+                    r.draw();
+                    if (r.alpha <= 0.005 || r.lineWidth <= 0.02) {
+                        ripples.splice(i, 1);
+                    }
+                }
+                requestAnimationFrame(animateMouseEffects);
             }
+            animateMouseEffects();
         });
     </script>
 
-    <!-- mouse animation js -->
 
-    <canvas id="mouseAnimationCanvas"></canvas>
-
-
-
-
-    <script>
-        $(document).ready(function () {
-
-            $(".header , #categoryTabs").click(function () {
-
-
-                $(".knontrst_sec").hide();
-
-            });
-
-        });
-    </script>
 </body>
 
 </html>

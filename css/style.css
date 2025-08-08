@@ -1,380 +1,334 @@
- :root {
-     --background-color: #f0f0f0;
-     --mobile-frame-bg-image: url(../img/mobile-bg.svg);
-     --text-color: #000000;
-     --muted-text-color: #6b7280;
-     --accordion-bg: #f8f9fa;
-     --accordion-button-bg: #f0f0f0;
-     --accordion-shadow: rgba(0, 0, 0, 0.05);
-     --time-tab-btn-hover-bg: #e9ecef;
-     --footer-border-color: #eee;
-     --footer-link-color: #000000;
-     --footer-span-color: #6c757d;
- }
-
- .dark-mode {
-     --background-color: #1a1a1a;
-     --mobile-frame-bg-image: url(../img/mobile-bg.svg);
-     --mobile-frame-bg-image: none;
-     --text-color: #e0e0e0;
-     --muted-text-color: #a0a0a0;
-     --accordion-bg: #2a2a2a;
-     --accordion-button-bg: #3a3a3a;
-     --accordion-shadow: rgba(0, 0, 0, 0.3);
-     --time-tab-btn-hover-bg: #4a4a4a;
-     --footer-border-color: #333;
-     --footer-link-color: #fff;
-     --footer-span-color: #a0a0a0;
- }
-
- * {
-     margin: 0;
-     padding: 0;
-     box-sizing: border-box;
-     /* overflow: hidden */
- }
-
- @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
-
- body {
-    font-family: 'SF Pro Display', sans-serif;
-     background-color: var(--background-color);
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     min-height: 100dvh;
-     margin: 0;
-     transition: background-color 0.3s ease;
- }
-
- .mobile-frame {
-     width: 316px;
-     height: 650px;
-     background-image: var(--mobile-frame-bg-image);
-     background-color: var(--background-color);
-     position: relative;
-     overflow: hidden;
-     display: flex;
-     background-size: contain;
-     background-position: center;
-     flex-direction: column;
-     padding: 20px;
-     box-sizing: border-box;
-     background-repeat: no-repeat;
-     transition: background-color 0.3s ease;
- }
-
- .header {
-     text-align: center;
-     /* margin-bottom: 20px; */
-     padding-top: 70px;
-     display: flex;
-     flex-direction: column;
-     align-items: start;
-     position: relative;
- }
-
- .date-section,
- .active-time-display {
-     font-size: 0.8rem;
-     font-weight: 500;
-     cursor: pointer;
-     padding: 8px 10px;
-     border-radius: 10px;
-     transition: background-color 0.3s ease, color 0.3s ease;
-     color: var(--text-color);
- }
-
- .time-tabs {
-     display: flex;
-     gap: 5px;
-     margin-top: 10px;
- }
-
- .time-tab-btn {
-     font-size: 0.8rem;
-     font-weight: 500;
-     cursor: pointer;
-     padding: 4px;
-     border-radius: 10px;
-     transition: background-color 0.3s ease, color 0.3s ease;
-     color: var(--text-color) !important;
- }
-
- .date-section:hover,
- .time-tab-btn:hover {
-     background-color: var(--time-tab-btn-hover-bg);
- }
-
- .time-tab-btn.active {
-     background-color: var(--time-tab-btn-hover-bg);
-     color: var(--text-color);
- }
-
- .expand-simplify-option {
-     font-size: 0.8rem;
-     font-weight: 500;
-     cursor: pointer;
-     padding: 8px 10px;
-     transition: background-color 0.3s ease, color 0.3s ease;
-     color: var(--text-color);
-     margin-top: 0;
- }
-
- .news-headlines-section {
-     flex-grow: 1;
-     overflow-y: scroll;
-     scrollbar-width: none;
-     padding-bottom: 10px;
-     background-color: var(--background-color);
-     transition: background-color 0.3s ease;
- }
-
- .news-headlines-section .accordion-item {
-     background-color: var(--accordion-bg);
-     border-radius: 10px;
-     margin-bottom: 10px;
-     box-shadow: 0 2px 5px var(--accordion-shadow);
-     border: none;
-     overflow: hidden;
-     transition: background-color 0.3s ease, box-shadow 0.3s ease;
- }
-
- .news-headlines-section .accordion-button {
-     background-color: var(--accordion-button-bg);
-     color: var(--text-color);
-     font-size: 12px;
-     font-weight: 400;
-     line-height: 18px;
-     padding: 15px;
-     border-radius: 10px;
-     text-align: left;
-     width: 100%;
-     transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, color 0.3s ease;
-     box-shadow: none;
-      font-family: 'SF Pro Display', sans-serif;
- }
-
- .news-headlines-section .accordion-button:not(.collapsed) {
-     background-color: var(--accordion-button-bg);
-     color: var(--text-color);
-     box-shadow: none;
- }
-
- .news-headlines-section .accordion-button:focus {
-     box-shadow: none;
-     border-color: transparent;
- }
-
- .news-headlines-section .accordion-button:hover {
-     transform: translateY(-2px);
-     box-shadow: 0 4px 8px var(--accordion-shadow);
- }
-
- .news-headlines-section .accordion-body {
-     padding: 15px;
-     font-size: 12px;
-     color: var(--muted-text-color);
-     font-weight: 400;
-     line-height: 18px;
-     transition: color 0.3s ease;
-      font-family: 'SF Pro Display', sans-serif;
-     background-color: var(--background-color);
- }
-
- .news-headlines-section .accordion-body img {
-     max-width: 100%;
-     height: auto;
-     width: 100%;
-     margin-bottom: 15px;
-     border-radius: .75rem;
- }
-
- .accordion-button::after {
-     display: none;
- }
-
- .footer {
-     text-align: center;
-     padding-top: 20px;
-     border-top: 1px solid var(--footer-border-color);
-     margin-top: auto;
-     transition: border-color 0.3s ease;
- }
-
- .footer a {
-     font-size: 0.8rem;
-     font-weight: 500;
-     cursor: pointer;
-     color: var(--footer-link-color) !important;
-     text-decoration: none;
-     margin: 0 10px;
-     transition: color 0.3s ease;
- }
-
- .footer span {
-     font-size: 0.8rem;
-     color: var(--footer-span-color);
-     margin-top: 5px;
-     display: block;
-     transition: color 0.3s ease;
- }
-
- #darkModeToggle {
-     position: absolute;
-     top: 75px;
-     right: 20px;
-     background: none;
-     border: none;
-     font-size: 1.2rem;
-     cursor: pointer;
-     color: var(--text-color);
-     transition: color 0.3s ease;
- }
-
- .dark-mode .date-section,
- .dark-mode .expand-simplify-option,
- .dark-mode .active-time-display {
-     color: #fff;
- }
-
- .dark-mode .systemsTab.active {
-     background-color: #8FB3C7;
-     color: #fff !important;
- }
-
-  .dark-mode .matterTab.active {
-     background-color: #C17C65;
-     color: #fff !important;
- }
-
-  .dark-mode .organicsTab.active {
-     background-color: #8FA57D;
-     color: #fff !important;
- }
-  .dark-mode .dissonaceTab.active {
-     background-color: #9A86A4;
-     color: #fff !important;
- }
-
- .dark-mode .news-headlines-section .accordion-button {
-     color: #fff;
- }
-
- .dark-mode .news-headlines-section .accordion-body p.text-muted {
-     color: #a0a0a0;
-      font-family: 'SF Pro Display', sans-serif;
- }
-
- .dark-mode .news-headlines-section .accordion-body p {
-     color: #e0e0e0 !important;
-      font-family: 'SF Pro Display', sans-serif;
- }
-
- .dark-mode .mobile-frame {
-     background-image: url(../img/light-mobile.png);
- }
-
-
- .dark-mode .footer span {
-     color: #fff;
- }
-
-    .knontrst_sec{
-        pointer-events: none;
-    }
-
-
-     .knontrst_sec span {
-          font-size: 12px !important;
-        line-height: 24px;
-         color: var(--text-color);
-          font-family: 'SF Pro Display', sans-serif;
-     }
-
- /* css mouseAnimationCanvas */
- #mouseAnimationCanvas {
-     position: fixed;
-     top: 0;
-     left: 0;
-     width: 100%;
-     height: 100%;
-     pointer-events: none;
-     z-index: 9999;
- }
-
- /* .text-muted {
-     font-size: 16px;
-     line-height: 24px;
-     color: #6b7280;
- } */
-
-.knontrst_sec {
-    /* max-height: 400px; */
-    overflow-y: scroll;
-    scrollbar-width: none;
+:root {
+    --background-color: #f0f0f0;
+    --semi-transparent-background: rgba(240, 240, 240, 0.3);
+    --text-color: #000000;
+    --muted-text-color: #6b7280;
+    --accordion-bg: #f8f9fa;
+    --accordion-button-bg: #f0f0f0;
+    --accordion-shadow: rgba(0, 0, 0, 0.05);
+    --time-tab-btn-hover-bg: #e9ecef;
+    --footer-border-color: #eee;
+    --header-border-color: #d1d5db;
+    --footer-link-color: #000000;
+    --footer-span-color: #6c757d;
+    --mobile-frame-bg-image: url(../img/mobile-bg.svg);
 }
 
- @media (max-width: 768px) {
-     #mouseAnimationCanvas {
-         display: none;
-     }
+.dark-mode {
+    --background-color: #1a1a1a;
+    --semi-transparent-background: rgba(26, 26, 26, 0.3);
+    --text-color: #e0e0e0;
+    --muted-text-color: #a0a0a0;
+    --accordion-bg: #2a2a2a;
+    --accordion-button-bg: #3a3a3a;
+    --accordion-shadow: rgba(0, 0, 0, 0.3);
+    --time-tab-btn-hover-bg: #4a4a4a;
+    --footer-border-color: #333;
+    --header-border-color: #4b5563;
+    --footer-link-color: #fff;
+    --footer-span-color: #a0a0a0;
+}
 
-     .mobile-frame {
-         width: 100%;
-         height: 100dvh;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'SF Pro Display', sans-serif;
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    transition: background-color 0.3s ease;
+    position: relative;
+}
+
+#mouseAnimationCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    pointer-events: none;
+    width: 100%;
+    height: 100%;
+}
+
+.mobile-frame {
+    width: 316px;
+    height: 650px;
+    background-image: var(--mobile-frame-bg-image);
+    background-color: transparent;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    background-size: contain;
+    background-position: center;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+    transition: background-color 0.3s ease;
+    z-index: 10;
+}
+
+.header {
+text-align: center;
+    /* margin-bottom: 20px; */
+    padding-top: 70px;
+    display: flex
+;
+    flex-direction: column;
+    align-items: start;
+    position: relative;
+}
+
+#dateDisplay {
+    border-bottom: 1px solid var(--header-border-color);
+    padding-left: 4px;
+    margin-bottom: 10px;
+    border-radius: 0;
+}
+
+.dark-mode #dateDisplay {
+    border-bottom: 1px solid #fff;
+}
+
+.date-section,
+.active-time-display {
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 8px 2px;
+    border-radius: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    color: var(--text-color);
+}
+
+.time-tabs {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.time-tab-btn {
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    color: var(--text-color);
+}
+
+.dark-mode .mobile-frame {
+    background-image: url(../img/light-mobile.png);
+}
+
+.time-tab-btn.active {
+    background-color: transparent;
+}
+
+.expand-simplify-option {
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 8px 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    color: var(--text-color);
+    margin-top: 0;
+}
+
+.news-headlines-section {
+    flex-grow: 1;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    padding-bottom: 10px;
+    background-color: var(--semi-transparent-background);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    transition: background-color 0.3s ease;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.news-headlines-section .accordion-item {
+    background-color: transparent;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px var(--accordion-shadow);
+    border: none;
+    overflow: hidden;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.news-headlines-section .accordion-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.news-headlines-section .accordion-button {
+    background-color: var(--accordion-button-bg);
+    color: var(--text-color);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: left;
+    width: 100%;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, color 0.3s ease;
+    box-shadow: none;
+    font-family: 'SF Pro Display', sans-serif;
+    background-color: transparent;
+}
+
+.news-headlines-section .accordion-button:not(.collapsed) {
+    background-color: transparent;
+    color: var(--text-color);
+    box-shadow: none;
+}
+
+.news-headlines-section .accordion-button:focus {
+    box-shadow: none;
+    border-color: transparent;
+}
+
+.news-headlines-section .accordion-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--accordion-shadow);
+}
+
+.news-headlines-section .accordion-body {
+    padding: 15px;
+    font-size: 12px;
+    color: var(--muted-text-color);
+    font-weight: 400;
+    line-height: 18px;
+    transition: color 0.3s ease;
+    font-family: 'SF Pro Display', sans-serif;
+    background-color: transparent;
+}
+
+.news-headlines-section .accordion-body img {
+    max-width: 100%;
+    height: auto;
+    width: 100%;
+    margin-bottom: 15px;
+    border-radius: .75rem;
+}
+
+.accordion-button::after {
+    display: none;
+}
+
+.footer {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid var(--footer-border-color);
+    margin-top: auto;
+    transition: border-color 0.3s ease;
+}
+
+.footer a {
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--footer-link-color);
+    margin: 0 10px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover {
+    color: var(--muted-text-color);
+}
+
+.footer span {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--footer-span-color);
+    transition: color 0.3s ease;
+}
+
+#darkModeToggle {
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: color 0.3s ease;
+    z-index: 10;
+}
+
+.knontrst_sec {
+    flex-grow: 1;
+    color: var(--text-color);
+    overflow-y: scroll;
+    scrollbar-width: none;
+    transition: color 0.3s ease;
+    background-color: var(--semi-transparent-background);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.back-btn {
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: color 0.3s ease;
+    padding-right: 5px;
+}
+
+
+
+@media (max-width: 768px) {
+    .header {
+        padding-top: 30px;
+    }
+
+    body {
+        min-height: auto;
+        justify-content: start;
+    }
+
+    .mobile-frame {
+        width: 100%;
+        height: 100dvh;
+        background-image: unset;
+    }
+
+    .dark-mode .mobile-frame {
          background-image: unset;
+    }
 
-     }
+    
 
-     body {
-         display: flex;
-         justify-content: start;
-         align-items: start;
-         min-height: 100vh;
-         margin: 0;
-         transition: background-color 0.3s ease;
-     }
+    #darkModeToggle {
+        position: absolute;
+        top: 20px;
+        right: 0;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--text-color);
+        transition: color 0.3s ease;
+        z-index: 10;
+    }
 
-     .header {
-
-         padding-top: 30px;
-
-     }
-
-     #darkModeToggle {
-
-         top: 30px;
-         right: 20px;
-
-     }
-
-     .dark-mode .mobile-frame {
-         background-image: unset;
-     }
-
-
-     .date-section,
-     .active-time-display,
-     .time-tab-btn,
-     .news-headlines-section .accordion-button,
-     .expand-simplify-option,
-     .news-headlines-section .accordion-body {
-       font-size: 12px !important;
-        line-height: 24px;
-         color: var(--text-color);
-          font-family: 'SF Pro Display', sans-serif;
-         
-     }
-
-
-
-     .text-muted {
-         font-size: 16px;
-         line-height: 24px;
-         color: #6b7280;
-     }
-
-
-
- }
+    .date-section,
+    .active-time-display,
+    .time-tab-btn,
+    .news-headlines-section .accordion-button,
+    .news-headlines-section .accordion-body {
+        font-size: 16px;
+    }
+}
